@@ -22,11 +22,11 @@ public class FixedSizeList<T> implements P6List<T> {
 	public T removeBack() {
 		if (this.size() == 0) {
 			throw new EmptyListError();
-		}
-		fill--;
-		T value = this.getIndex(fill);
-		this.array[fill] = null;
-		return value;
+		} 	
+			T value = this.getIndex( fill - 1);
+			fill--;
+			this.array[fill] = null;
+			return value;	
 	}
 
 	@Override
