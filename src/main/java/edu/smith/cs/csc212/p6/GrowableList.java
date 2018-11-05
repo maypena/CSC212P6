@@ -14,12 +14,12 @@ public class GrowableList<T> implements P6List<T> {
 	}
 
 	@Override
-	public T removeFront() {
-		throw new P6NotImplemented();
+	public T removeFront() { // Efficiency: O(n) because it uses removeIndex which is O(n)
+		return removeIndex(0);
 	}
 
 	@Override
-	public T removeBack() {
+	public T removeBack() { // Efficiency: O(1)s
 		if (this.size() == 0) {
 			throw new EmptyListError();
 		} 	
@@ -30,17 +30,26 @@ public class GrowableList<T> implements P6List<T> {
 	}
 
 	@Override
-	public T removeIndex(int index) {
-		throw new P6NotImplemented();
+	public T removeIndex(int index) { // Efficiency: O(n) because of for loop 
+		if (this.size() == 0) {
+			throw new EmptyListError();
+		}
+		T removed = this.getIndex(index);
+		fill--;
+		for (int i=index; i<fill; i++) {
+			this.array[i] = this.array[i+1];
+		}
+		this.array[fill] = null;
+		return removed;
 	}
 
 	@Override
-	public void addFront(T item) {
+	public void addFront(T item) { // Efficiency: O(n) it uses addIndex which is O(n)
 		addIndex( item, 0 );
 	}
 
 	@Override
-	public void addBack(T item) {
+	public void addBack(T item) { // Efficiency: O(1)
 		// I've implemented part of this for you.
 		if (fill >= this.array.length) { 
 			throw new P6NotImplemented();
@@ -49,7 +58,7 @@ public class GrowableList<T> implements P6List<T> {
 	}
 
 	@Override
-	public void addIndex(T item, int index) {
+	public void addIndex(T item, int index) { // Efficiency: O(n) because of for loop 
 		for (int j=fill; j>index; j--) {
 			array[j] = array[j-1];
 		}
@@ -58,12 +67,12 @@ public class GrowableList<T> implements P6List<T> {
 	}
 	
 	@Override
-	public T getFront() {
+	public T getFront() { // Efficiency: O(1)
 		return this.getIndex(0);
 	}
 
 	@Override
-	public T getBack() {
+	public T getBack() { // Efficiency: O(1)
 		return this.getIndex(this.fill-1);
 	}
 
@@ -74,17 +83,17 @@ public class GrowableList<T> implements P6List<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public T getIndex(int index) {
+	public T getIndex(int index) { // Efficiency: O(1)
 		return (T) this.array[index];
 	}
 
 	@Override
-	public int size() {
+	public int size() { // Efficiency: O(1)
 		return fill;
 	}
 
 	@Override
-	public boolean isEmpty() {
+	public boolean isEmpty() { // Efficiency: O(1)
 		return fill == 0;
 	}
 
